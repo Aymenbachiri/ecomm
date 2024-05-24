@@ -1,6 +1,15 @@
 "use client";
 
+<<<<<<< HEAD
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
+=======
+import {
+  ChevronDownIcon,
+  Cog6ToothIcon,
+  PowerIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/solid";
+>>>>>>> master
 import {
   Avatar,
   Button,
@@ -8,6 +17,7 @@ import {
   MenuHandler,
   MenuItem,
   MenuList,
+<<<<<<< HEAD
   Typography,
 } from "@material-tailwind/react";
 import React, { useState } from "react";
@@ -16,6 +26,19 @@ import { CommonProps } from "@/constants/constants";
 
 export default function ProfileMenu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+=======
+} from "@material-tailwind/react";
+import React, { useState } from "react";
+import { CommonProps } from "@/constants/constants";
+import { signOut } from "next-auth/react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+export default function ProfileMenu() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathName = usePathname();
+  const currentLanguage = pathName.split("/")[1] || "en";
+>>>>>>> master
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -33,7 +56,11 @@ export default function ProfileMenu() {
             size="sm"
             alt="tania andrew"
             className="border border-gray-900 p-0.5"
+<<<<<<< HEAD
             src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+=======
+            src="https://static.thenounproject.com/png/4035887-200.png"
+>>>>>>> master
             placeholder=""
             onPointerEnterCapture={() => {}}
             onPointerLeaveCapture={() => {}}
@@ -47,6 +74,7 @@ export default function ProfileMenu() {
         </Button>
       </MenuHandler>
       <MenuList {...CommonProps} className="p-1">
+<<<<<<< HEAD
         {ProfileMenuItems.map(({ id, label, icon }) => {
           const isLastItem = id === ProfileMenuItems.length;
           return (
@@ -76,6 +104,42 @@ export default function ProfileMenu() {
             </MenuItem>
           );
         })}
+=======
+        <MenuItem
+          {...CommonProps}
+          onClick={closeMenu}
+          className="flex items-center gap-2 rounded w-full"
+        >
+          <Link
+            className="flex items-center gap-2 rounded w-full"
+            href={`/${currentLanguage}/dashboard`}
+          >
+            <UserCircleIcon className="w-6" />
+            <span className="flex-grow">Dashboard</span>
+          </Link>
+        </MenuItem>
+        <MenuItem
+          {...CommonProps}
+          onClick={closeMenu}
+          className="flex items-center gap-2 rounded w-full"
+        >
+          <Link
+            className="flex items-center gap-2 rounded w-full"
+            href={`/${currentLanguage}/edit-profile`}
+          >
+            <Cog6ToothIcon className="w-6" />
+            <span className="flex-grow">Edit Profile</span>
+          </Link>
+        </MenuItem>
+        <MenuItem
+          {...CommonProps}
+          onClick={() => signOut()}
+          className="flex items-center gap-2 rounded w-full text-red-600"
+        >
+          <PowerIcon className="w-6" />
+          <span className="flex-grow">Sign Out</span>
+        </MenuItem>
+>>>>>>> master
       </MenuList>
     </Menu>
   );

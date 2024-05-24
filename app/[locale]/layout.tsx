@@ -4,6 +4,11 @@ import { useLocale } from "next-intl";
 import MaterialTailwindProvider from "@/components/providers/MaterialTailwind";
 import { Providers } from "@/components/providers/ThemeProvider";
 import StickyNavbar from "@/components/navbar/StickyNavbar";
+<<<<<<< HEAD
+=======
+import AuthProvider from "@/components/providers/AuthProvider";
+import ReduxProvider from "@/components/providers/ReduxProvider";
+>>>>>>> master
 
 export default function LocaleLayout({
   children,
@@ -21,6 +26,7 @@ export default function LocaleLayout({
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
       <body>
+<<<<<<< HEAD
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Providers>
             <MaterialTailwindProvider>
@@ -31,6 +37,22 @@ export default function LocaleLayout({
             </MaterialTailwindProvider>
           </Providers>
         </NextIntlClientProvider>
+=======
+        <AuthProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <ReduxProvider>
+              <Providers>
+                <MaterialTailwindProvider>
+                  <>
+                    <StickyNavbar />
+                    {children}
+                  </>
+                </MaterialTailwindProvider>
+              </Providers>
+            </ReduxProvider>
+          </NextIntlClientProvider>
+        </AuthProvider>
+>>>>>>> master
       </body>
     </html>
   );

@@ -2,7 +2,7 @@
 import Email from "@/svg/Email";
 import Password from "@/svg/Password";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -10,6 +10,8 @@ export default function LoginPage() {
   const router = useRouter();
   const [err, setErr] = useState<Error>();
   const [captcha, setCaptcha] = useState(false);
+  const pathName = usePathname();
+  const currentLanguage = pathName.split("/")[1] || "en";
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const target = e.target as HTMLFormElement;
@@ -30,7 +32,7 @@ export default function LoginPage() {
       }
       if (res.ok && captcha) {
         alert("Welcome Back");
-        router.push("/dashboard");
+        router.push(`/${currentLanguage}/dashboard`);
       }
     } catch (error) {
       if (error instanceof Error) {

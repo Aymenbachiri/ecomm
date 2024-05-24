@@ -19,7 +19,6 @@ export default async function Edit({ params }: { params: { id: string } }) {
       title={product.title}
       category={product.category}
       price={product.price}
-      oldprice={product.oldprice}
       description={product.description}
       imageurl={product.imageurl}
       rating={product.rating}

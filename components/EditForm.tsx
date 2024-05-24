@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 import { useSession } from "next-auth/react";
 
@@ -9,7 +9,6 @@ interface ProductDetails {
   title: string;
   category: string;
   price: number;
-  oldprice: number;
   description: string;
   imageurl: string;
   rating: number;
@@ -20,7 +19,6 @@ export default function EditForm({
   title: initialTitle,
   category: initialCategory,
   price: initialPrice,
-  oldprice: initialOldPrice,
   description: initialDescription,
   imageurl: initialImageUrl,
   rating: initialRating,
@@ -30,11 +28,11 @@ export default function EditForm({
   const [title, setTitle] = useState<string>(initialTitle);
   const [category, setCategory] = useState<string>(initialCategory);
   const [price, setPrice] = useState<number>(initialPrice);
-  const [oldprice, setOldPrice] = useState<number>(initialOldPrice);
   const [description, setDescription] = useState<string>(initialDescription);
   const [imageurl, setImageUrl] = useState<string>(initialImageUrl);
   const [rating, setRating] = useState<number>(initialRating);
-
+  const pathName = usePathname();
+  const currentLanguage = pathName.split("/")[1] || "en";
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -49,13 +47,12 @@ export default function EditForm({
           description,
           category,
           imageurl,
-          oldprice,
           price,
           rating,
         }),
       });
       if (res.ok) {
-        router.push("/dashboard");
+        router.push(`/${currentLanguage}/dashboard`);
       } else {
         throw new Error("Failed to edit product");
       }
@@ -128,19 +125,6 @@ export default function EditForm({
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="text"
               placeholder="Example www.unsplash.com/photos/1352"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2">
-              Old Price in $$
-            </label>
-            <input
-              value={oldprice}
-              onChange={(e) => setOldPrice(e.target.value as any)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              type="number"
-              placeholder="Enter the old Price"
               required
             />
           </div>

@@ -2,6 +2,7 @@
 import { CommonProps } from "@/constants/constants";
 import Cart from "@/svg/Cart";
 import { Button, Typography } from "@material-tailwind/react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -11,6 +12,7 @@ export default function NavList() {
   const cart = useSelector((state: any) => state.shop.products);
   const pathName = usePathname();
   const currentLanguage = pathName.split("/")[1] || "en";
+  const session = useSession();
   return (
     <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
       <Typography
@@ -66,24 +68,29 @@ export default function NavList() {
           <Cart />
         </Link>
       </Typography>
-      <Typography
-        {...CommonProps}
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <Link href={`/${currentLanguage}/log-in`} className="flex items-center">
-          <Button
-            {...CommonProps}
-            variant="gradient"
-            size="sm"
-            className="inline-block"
+      {session.status === "unauthenticated" && (
+        <Typography
+          {...CommonProps}
+          as="li"
+          variant="small"
+          color="blue-gray"
+          className="p-1 font-normal"
+        >
+          <Link
+            href={`/${currentLanguage}/login`}
+            className="flex items-center"
           >
-            Log in
-          </Button>
-        </Link>
-      </Typography>
+            <Button
+              {...CommonProps}
+              variant="gradient"
+              size="sm"
+              className="inline-block"
+            >
+              Log in
+            </Button>
+          </Link>
+        </Typography>
+      )}
     </ul>
   );
 }

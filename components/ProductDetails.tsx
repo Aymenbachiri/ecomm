@@ -1,6 +1,6 @@
 "use client";
 
-import { addToCart } from "@/reduxToolkit/shopSlice";
+import { addToCart } from "@/reduxToolkit/shopStoreSlice";
 import { useDispatch } from "react-redux";
 
 interface ProductDetailsProps {
@@ -50,7 +50,6 @@ export default function ProductDetails({
                         description: description,
                         category: category,
                         imageurl: imageurl,
-                        oldprice: oldprice,
                         price: price,
                         rating: rating,
                         creator: creator,

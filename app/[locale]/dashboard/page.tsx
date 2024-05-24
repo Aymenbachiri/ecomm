@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import useSWR from "swr";
 
@@ -18,6 +18,8 @@ type Product = {
 export default function Dashboard() {
   const session = useSession();
   const router = useRouter();
+  const pathName = usePathname();
+  const currentLanguage = pathName.split("/")[1] || "en";
   const fetcher = (...args: Parameters<typeof fetch>) =>
     fetch(...args).then((res) => res.json());
 
@@ -70,7 +72,7 @@ export default function Dashboard() {
   };
 
   if (session.status === "unauthenticated") {
-    router.push("/login");
+    router.push(`/${currentLanguage}/login`);
   }
   if (session.status === "authenticated") {
     if (isLoading) {
@@ -114,7 +116,7 @@ export default function Dashboard() {
                       {formatTimestamp(item.updatedAt).substring(0, 10)}{" "}
                     </span>
                     <Link
-                      href={`/products/${item._id}`}
+                      href={`/${currentLanguage}/products/${item._id}`}
                       className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                     >
                       View
@@ -139,7 +141,7 @@ export default function Dashboard() {
                       </svg>
                     </button>
                     <Link
-                      href={`/edit/${item._id}`}
+                      href={`/${currentLanguage}/edit/${item._id}`}
                       className="bg-gray-500 hover:bg-gray-600 text-white font-bold p-2 rounded-full text-center"
                     >
                       <svg

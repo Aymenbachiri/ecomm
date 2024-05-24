@@ -14,12 +14,14 @@ import NavList from "./List/NavList";
 import Cart from "@/svg/Cart";
 import { usePathname } from "next/navigation";
 import { useSelector } from "react-redux";
+import { signOut, useSession } from "next-auth/react";
 
 export default function StickyNavbar() {
   const { openNav, setOpenNav } = useResponsiveNav();
   const cart = useSelector((state: any) => state.shop.products);
   const pathName = usePathname();
   const currentLanguage = pathName.split("/")[1] || "en";
+  const session = useSession();
 
   return (
     <div className="max-h-[768px] container mx-auto">
@@ -47,7 +49,7 @@ export default function StickyNavbar() {
             <div className="mr-4 hidden lg:block">
               <NavList />
             </div>
-            <ProfileMenu />
+            {session.status === "authenticated" && <ProfileMenu />}
             <TranslationMenu />
             <ThemeSwitch />
             <Link
